@@ -1,12 +1,29 @@
+require_relative "Hand.rb"
 class Player
   attr_reader :hand, :name
   
-  def initialize hand = [], name = 'unknown'
+  def initialize hand = Hand.new, name = 'unknown'
     @hand = hand
 	@name = name
   end
   
-  def card_to_ask_for
-    
+  #the player adds card to his hand
+  def push_card_to_hand(card_to_be_pushed = nil)
+    @hand.push_card(card_to_be_pushed)
+  end
+  
+  #the player removes card from his hand
+  def pop_card_from_hand(card_to_be_popped)
+    @hand.pop_card(card_to_be_popped)
+  end
+  
+  #Here we ask the other player for card and if he has one
+  #we take it from him and push it in our hand. Otherwise we push nil.
+  def ask_for_card(other_player, card)
+    if other_player.hand.include_rank?(card.rank)
+	  push_card_to_hand(other_player.pop_card_from_hand(card))
+	else
+	  push_card_to_hand
+	end
   end
 end

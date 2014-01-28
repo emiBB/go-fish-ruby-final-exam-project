@@ -16,7 +16,7 @@ class Hand
   end
   
   #pushes card into the hand
-  def push_card(card_to_be_pushed)
+  def push_card(card_to_be_pushed = nil)
     @cards<<card_to_be_pushed
   end
   
