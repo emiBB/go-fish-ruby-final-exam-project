@@ -26,4 +26,10 @@ class Player
 	  push_card_to_hand
 	end
   end
+  
+  #This method gets called if we have asked for a card and the opponent
+  #didn't have the one. Then we have to pick from the 'lake' of cards
+  def pick_card_from_lake(source)
+
+  end
 end
