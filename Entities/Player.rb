@@ -28,8 +28,9 @@ class Player
   end
   
   #This method gets called if we have asked for a card and the opponent
-  #didn't have the one. Then we have to pick from the 'lake' of cards
+  #didn't have the one. Then we have to pick from the 'lake' of cards.
+  #source is from type: LakeAsSource
   def pick_card_from_lake(source)
-
+    push_card_to_hand(source.random_card)
   end
 end
