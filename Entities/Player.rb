@@ -1,4 +1,5 @@
 require_relative "Hand.rb"
+require_relative "Card.rb"
 class Player
   attr_reader :hand, :name
   
@@ -32,5 +33,10 @@ class Player
   #source is from type: LakeAsSource
   def pick_card_from_lake(source)
     push_card_to_hand(source.random_card)
+  end
+  
+  #Returns the number of cards in the hand of the player
+  def hand_size
+    @hand.cards.size
   end
 end
