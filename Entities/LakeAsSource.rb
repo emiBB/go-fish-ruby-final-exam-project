@@ -1,4 +1,4 @@
-def LakeAsSource
+class LakeAsSource
   attr_reader :source_cards
   def initialize cards
     @source_cards = cards
