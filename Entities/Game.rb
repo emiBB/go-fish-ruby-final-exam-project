@@ -1,34 +1,61 @@
-require_realtive 'Player.rb'
-require_realtive 'Card.rb'
-require_realtive 'LakeAsSource.rb'
-require_realtive 'CardsDeck.rb'
+require_relative 'Player.rb'
+require_relative 'Card.rb'
+require_relative 'LakeAsSource.rb'
+require_relative 'CardsDeck.rb'
+require 'yaml'
 
 class Game
+  attr_reader :first_player, :second_player, :lake_as_source, :saved_games
   
   def initialize fplayer, splayer, source
 	@first_player = fplayer
 	@second_player = splayer
 	@lake_as_source = source
-	@runs_counter = 0
+	@saved_games = {}
+	load_saved_games
   end
   
-  #Зарежда запазена игра от file_name !!!Очаква се file_name да е с правилният '/' forward slash
-  def load_game file_name
-    self = Marshal::load(File.open(file_name, 'r'))
+  #Saves game
+  def save_game
+    formatted_date = Time.now.to_s[0..18].gsub(' ', '@').gsub(':','-')
+    file_name = "saved-game-on-#{formatted_date}.yml"
+    output = File.new("C:/Users/Ninka/Desktop/New folder/#{file_name}", 'w')
+	output.puts YAML.dump(self)
+	output.close
+	load_saved_games
   end
   
-  #Запазва файл в посoчаната папка !!!Очаква се path_for_saving директорията да е с правилен '/' forward slash
-  def save_game path_for_saving
-    data = Marshal::dump(self, File.open(path_for_saving + '/saved_game' + (@runs_counter++).to_s, 'w'))
+  #Loads game depending on the 'saved_game_name' !!!
+  def load_game saved_game_name
+	input = File.new("C:/Users/Ninka/Desktop/New folder/#{saved_game_name}.yml", 'r')
+	loaded = YAML.load(input.read)
+    @first_player, @second_player = loaded.first_player, loaded.second_player
+	@lake_as_source = loaded.lake_as_source
+	input.close
   end
   
-  #Раздава карти на играчите и останалите ги слага в 'езерото'
+  #Deals cards to the players and the others are being assigned to the 'lake'
   def deal_cards
     full_deck = CardsDeck.new.full_deck
-    1.upto(7){ |i|
-	  @first_player.push_card_to_hand(full_deck.delete(full_deck.sample))
-	  @second_player.push_card_to_hand(full_deck.delete(full_deck.sample))
-	}
-	@source = full_deck
+	cards_for_player @first_player, full_deck
+	cards_for_player @second_player, full_deck
+	@lake_as_source = LakeAsSource.new(full_deck)
+  end
+  
+  private
+  #Deals seven cards to the passed player from the passed deck
+  def cards_for_player player, deck
+	1.upto(7){ |i| 
+	  random_card = deck.sample
+	  player.push_card_to_hand(random_card)
+	  deck.delete_if{ |card| card.rank == random_card.rank and card.color == random_card.color }
+	  }
+  end
+  
+  #Loads all the saved games into the game object on initialization and after game is saved
+  def load_saved_games
+    Dir.glob("C:/Users/Ninka/Desktop/New folder/*.yml").each_with_object(@saved_games) do |filename, hsh|
+	  hsh[File.basename(filename,'.yml')] = filename
+	end
   end
 end

@@ -6,11 +6,15 @@ class LakeAsSource
 
   #Returns the size of the 'lake'
   def size_of_source
-    @source_cards.length
+    @source_cards.size
   end
 
   #Returns random card from the source and removes it from there
   def random_card
-    @source_cards.delete(@source_cards.sample)
+	random_card = @source_cards.sample
+	@source_cards.delete_if{ |card| 
+	  card.rank == random_card.rank and card.color == random_card.color 
+	}
+    random_card
   end
 end
