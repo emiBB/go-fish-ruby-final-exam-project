@@ -5,6 +5,7 @@ describe Hand do
     @c1 = Card.new :jack, :diamond
 	@c2 = Card.new :queen, :heart
 	@c3 = Card.new :king, :spade
+	@c4 = Card.new :jack, :spade
 	@hand = Hand.new
   end
   
@@ -42,9 +43,10 @@ describe Hand do
   it "returns a Card object and removes it from the hand" do
 	  @hand.push_card(@c1)
 	  @hand.push_card(@c2)
-	  @hand.cards.size.should eql 2
+	  @hand.push_card(@c4)
+	  @hand.cards.size.should eql 3
 	  @hand.pop_card(@c1).should == (@c1)
-	  @hand.cards.size.should eql 1
+	  @hand.cards.size.should eql 2
 	  non_existing = Card.new :king, :spade
       @hand.pop_card(non_existing).should == nil	  
 	end

@@ -7,7 +7,7 @@ class Card
   end
   
   def ==(another_card)
-    rank == another_card.rank
+    (@rank == another_card.rank and @color == another_card.color)
   end
   
   def to_s
