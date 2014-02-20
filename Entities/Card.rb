@@ -6,6 +6,7 @@ class Card
 	@color = color
   end
   
+  #Overloading the '==' comparison between two cards
   def ==(another_card)
     (@rank == another_card.rank and @color == another_card.color)
   end

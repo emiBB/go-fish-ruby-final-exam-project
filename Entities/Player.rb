@@ -11,7 +11,7 @@ class Player
 	@cleared_cards = cleared
   end
   
-  #the player adds card to his hand
+  #the player adds card to his hand and clears if four of a kind are available
   def push_card_to_hand(card_to_be_pushed = nil)
     @hand.push_card(card_to_be_pushed)
 	clear_four_of_a_kind
@@ -50,11 +50,10 @@ class Player
     four_of_rank_hash = grouped_by_rank.select {|key, value| value.size == 4}
     four_of_rank_keys = []
 	four_of_rank_hash.map{|key,value| four_of_rank_keys << key}
-  
+	
     four_of_rank_keys.each { |rank|
 	  @hand.cards.each { |card| @cleared_cards<< card if card.rank == rank }
       @hand.cards.delete_if{|card| card.rank == rank}
 	}
-    
   end
 end

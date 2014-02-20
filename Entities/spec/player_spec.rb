@@ -12,7 +12,7 @@ describe Player do
 	@c21 = Card.new :king, :diamond
 	@h2 = Hand.new ([@c11, @c21])
 	@other_player = Player.new @h2, 'Spec Player opponent'
-
+	
 	@lake = LakeAsSource.new([Card.new(:ace, :heart), Card.new(:king, :club), Card.new(:nine, :spade)])
   end
   
@@ -45,6 +45,7 @@ describe Player do
 	  @player.hand.include_rank?(:king).should eql true
 	  @other_player.hand.cards.size.should eql 1
 	  @other_player.hand.include_rank?(:king).should_not eql true
+	   
   	end	
   end
 
