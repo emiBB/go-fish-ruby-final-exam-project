@@ -28,7 +28,20 @@ class Hand
       #nil
     end	
   end
-
+  
+  #returns a random rank from the hand(Used for the computer gameplay)
+  def get_random_rank
+    return ranks.sample
+  end
+  
+  #returns array of colors missing for this rank
+  #This method is used for the computer gameplay
+  def missing_colors_for_rank rank
+    filtered_by_rank = @cards.select {|card| card.rank == rank}
+	colors_for_given_rank = []
+	filtered_by_rank.each {|card| colors_for_given_rank<<card.color}
+	return [:heart, :diamond, :spade, :club] - colors_for_given_rank
+  end
   private
   #returns an array with all the ranks
   def ranks

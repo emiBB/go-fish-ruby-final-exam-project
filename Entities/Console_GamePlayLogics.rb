@@ -17,7 +17,7 @@ module GamePlayLogics
 	ask_for_card if user_choice == "1"
 	save_current_game if user_choice == "2"
 	load_game_window if user_choice == "3"
-	exit_game_window if user_choice == "3"
+	exit_game_window if user_choice == "4"
   end
   
   def ask_for_card
@@ -37,7 +37,6 @@ module GamePlayLogics
 	  puts "<<GREAT! Excellent try! It is your turn again>>"
 	  sleep 4
 	  @turn = :first_player
-	  ask_for_card
 	else
 	  refresh_window
 	  puts "<<#{@game.second_player.name} doesn't have that card. GO FISH now!>>"
@@ -83,7 +82,23 @@ module GamePlayLogics
   end
   
   def activate_second_player
-  
+	rank_to_ask_for = @game.second_player.hand.get_random_rank
+	color_sample = @game.second_player.hand.missing_colors_for_rank(rank_to_ask_for).sample
+	card_to_ask_for = Card.new rank_to_ask_for, color_sample
+	puts "<<The other player is asking for>> #{card_to_ask_for.to_s}"
+	sleep 5
+	if(@game.second_player.ask_for_card(@game.first_player, card_to_ask_for))
+	  refresh_window
+	  puts "<<Ouch! The other player guessed right... it is his turn again!>>"
+	  sleep 4
+	  @turn = :second_player
+	else
+	  refresh_window
+	  puts "<<Whew... you were lucky this time. It is your turn now!>>"
+	  sleep 4
+	  @game.second_player.pick_card_from_lake(@game.lake_as_source)
+	  @turn = :first_player
+	end
   end
   
   def refresh_window

@@ -12,7 +12,7 @@ class Card
     (@rank == another_card.rank and @color == another_card.color)
 	end
   end
-  
+
   def to_s
     "#{rank}_#{color}"
   end

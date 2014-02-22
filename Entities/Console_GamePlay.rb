@@ -20,11 +20,11 @@ class GamePlay
         else
 		 activate_second_player
 		end
-	    #@game.second_player.pick_card_from_lake(@game.lake_as_source)
-		#@game.first_player.pick_card_from_lake(@game.lake_as_source)
-		#sleep 3
-		#system ("cls")
 	  end while (@game.lake_as_source.size_of_source != 0 && @game.first_player.hand_size != 0 && @game.second_player.hand_size != 0)
+	  
+	  "YOU ARE THE WINNER" if (@game.first_player.cleared_cards > @game.second_player.cleared_cards) 
+	  "YOU LOST" if (@game.first_player.cleared_cards < @game.second_player.cleared_cards) 
+	  "EVERYBODY IS WINNING" if (@game.first_player.cleared_cards == @game.second_player.cleared_cards) 
 	else
 	  show_server_message("It was a nice meaningful conversation!!! BYE-BYE")
 	  sleep 3

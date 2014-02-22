@@ -23,7 +23,7 @@ module LayoutMessages
 	puts "\t<<Source>> [#{@game.lake_as_source.size_of_source}]\n\n\n\n"
 	puts "\t<<#{@game.first_player.name.chomp}>>"
 	show_real_player_data
-	@game.first_player.hand.cards.each {|card| puts "\t[#{card.to_s.chomp}]"}
+	@game.first_player.hand.cards.sort_by{|card| card.rank}.each {|card| puts "\t[#{card.to_s.chomp}]"}
 	puts "\n\n\n"
 	puts "========================================================"
   end

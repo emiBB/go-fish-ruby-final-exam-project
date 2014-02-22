@@ -51,4 +51,20 @@ describe Hand do
       @hand.pop_card(non_existing).should == nil	  
 	end
   end
+  
+  describe "#get_random_rank" do
+  it "returns a random rank from the hand(Used for the computer gameplay)" do
+      @hand = Hand.new([@c1, @c2, @c3])
+	  sample_rank = @hand.get_random_rank
+	  @hand.include_rank?(sample_rank).should eql true
+    end  
+  end
+  
+  describe "#missing_colors_for_rank" do
+  it "take one argument-rank and generates a list of the missing colors for that rank" do
+    @hand = Hand.new([@c1,@c2,@c4])	
+	@hand.missing_colors_for_rank(:jack).sort.should =~ [:club, :heart].sort	
+	@hand.missing_colors_for_rank(:queen).sort.should =~ [:club, :diamond, :spade].sort	
+	end
+  end
 end
