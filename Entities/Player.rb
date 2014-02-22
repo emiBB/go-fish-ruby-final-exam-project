@@ -27,8 +27,10 @@ class Player
   def ask_for_card(other_player, card)
     if other_player.hand.include_rank?(card.rank)
 	  push_card_to_hand(other_player.pop_card_from_hand(card))
+	  return true
 	else
 	  push_card_to_hand
+	  return false
 	end
   end
   
@@ -46,14 +48,17 @@ class Player
   
   #the method is used to clear four cards of the same kind from the hand
   def clear_four_of_a_kind
-    grouped_by_rank = @hand.cards.group_by {|card| card.rank}
-    four_of_rank_hash = grouped_by_rank.select {|key, value| value.size == 4}
-    four_of_rank_keys = []
-	four_of_rank_hash.map{|key,value| four_of_rank_keys << key}
-	
-    four_of_rank_keys.each { |rank|
-	  @hand.cards.each { |card| @cleared_cards<< card if card.rank == rank }
-      @hand.cards.delete_if{|card| card.rank == rank}
-	}
+    @hand.cards.delete(nil)	
+    if(@hand.cards.size > 0)
+      grouped_by_rank = @hand.cards.group_by {|card| card.rank}
+      four_of_rank_hash = grouped_by_rank.select {|key, value| value.size == 4}
+      four_of_rank_keys = []
+	  four_of_rank_hash.map{|key,value| four_of_rank_keys << key}
+	  
+      four_of_rank_keys.each { |rank|
+	    @hand.cards.each { |card| @cleared_cards<< card if card.rank == rank }
+        @hand.cards.delete_if{|card| card.rank == rank}
+	  }
+	end
   end
 end

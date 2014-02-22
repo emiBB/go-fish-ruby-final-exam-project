@@ -32,6 +32,16 @@ describe Player do
   	end	
   end
   
+  describe "#pop_card_from_hand" do
+    it "Takes one parameter Card object and removes it from the hand" do
+	  @player.hand_size.should eql 2	  
+	  @player.pop_card_from_hand (@c2)
+	  @player.hand_size.should eql 1
+	  @player.pop_card_from_hand (@c1)
+	  @player.hand_size.should eql 0
+	end
+  end
+  
   describe "#ask_for_card" do
     it "takes two arguments: another player and card to be asked for" do
 	  @player.hand.cards.size.should eql 2
@@ -39,12 +49,22 @@ describe Player do
 	  @other_player.hand.cards.size.should eql 2
 	  @other_player.hand.include_rank?(:king).should eql true
 
-	  @player.ask_for_card(@other_player, @c21)
+	  @player.ask_for_card(@other_player, @c21).should eql true
 
 	  @player.hand.cards.size.should eql 3
 	  @player.hand.include_rank?(:king).should eql true
 	  @other_player.hand.cards.size.should eql 1
 	  @other_player.hand.include_rank?(:king).should_not eql true
+	  
+	  c1 = Card.new :jack, :diamond
+	  c2 = Card.new :queen, :spade
+	  h1 = Hand.new([c1])
+	  h2 = Hand.new([c2])
+	  p1 = Player.new h1, "Stefcho"
+	  p2 = Player.new h2, "Abdulcho"
+	  
+	  p1.ask_for_card(p2, c1).should eql false
+	  p1.ask_for_card(p2, c2).should eql true
 	   
   	end	
   end

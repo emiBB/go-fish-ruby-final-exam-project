@@ -22,10 +22,10 @@ class Hand
   
   #returns a Card object and removes it from the hand
   def pop_card(card_to_be_popped)
-    if card_to_be_popped.class != NilClass and self.include_rank?(card_to_be_popped.rank) then
+	if card_to_be_popped.class != NilClass and self.include_rank?(card_to_be_popped.rank) then
       @cards.delete(@cards.select {|card| card == card_to_be_popped}.first)
     else
-      nil
+      #nil
     end	
   end
 

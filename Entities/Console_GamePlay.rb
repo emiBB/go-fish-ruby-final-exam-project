@@ -5,16 +5,21 @@ require_relative 'Console_GamePlayLogics.rb'
 class GamePlay
   include LayoutMessages
   include GamePlayLogics
-  attr_accessor :real_player_name, :initial_choice, :game
+  attr_accessor :real_player_name, :initial_choice, :game, :turn
   def start
     system ("cls")
-	
+	@turn = :first_player	
     show_welcome_header
-   
 	if(@initial_choice == 'Y') 
 	  initialize_game
 	  begin
-        #show_current_state_of_the_table
+	    system ("cls")
+        show_current_state_of_the_table
+		if(@turn == :first_player)
+		 activate_first_player
+        else
+		 activate_second_player
+		end
 	    #@game.second_player.pick_card_from_lake(@game.lake_as_source)
 		#@game.first_player.pick_card_from_lake(@game.lake_as_source)
 		#sleep 3

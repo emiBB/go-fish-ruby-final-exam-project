@@ -8,7 +8,9 @@ class Card
   
   #Overloading the '==' comparison between two cards
   def ==(another_card)
+	if(another_card != nil)
     (@rank == another_card.rank and @color == another_card.color)
+	end
   end
   
   def to_s
