@@ -12,7 +12,7 @@ class Card
     (@rank == another_card.rank and @color == another_card.color)
 	end
   end
-
+  #tozi metod ne e nujen moje da se polzva ala-bala*
   def to_s
     "#{rank}_#{color}"
   end
